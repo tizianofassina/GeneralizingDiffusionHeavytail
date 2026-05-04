@@ -1,0 +1,17 @@
+         
+*.npy
+*.pt
+*.ckpt
+*.csv         
+*.png
+*.jpg
+*.jpeg
+*.pt
+*.pth
+*.pkl
+
+__pycache__/   
+*.py[cod]
+lightning_logs/
+runs/
+.pytest_cache/

@@ -1,0 +1,17 @@
+This repository is for ICML 2026 submission.
+The combined work is licensed under CC BY-NC-SA 4.0.
+
+COPYRIGHT & SOURCE ATTRIBUTION:
+1. NVIDIA EDM: Copyright (c) 2022, NVIDIA CORPORATION & AFFILIATES.
+   License: https://github.com/NVlabs/edm/blob/main/LICENSE.txt
+   
+2. NVIDIA EDM2: Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES.
+   License: https://github.com/NVlabs/edm2/blob/main/LICENSE.txt
+
+3. Apple ML-Tarflow: Copyright (c) 2024, Apple Inc.
+   License: https://github.com/apple/ml-tarflow/blob/main/LICENSE
+
+MODIFICATIONS:
+Copyright (c) 2026 Anonymous Authors (ICML Submission).
+All modifications and new contributions are released under CC BY-NC-SA 4.0:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode

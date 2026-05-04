@@ -1,0 +1,26 @@
+# Core (HT + GMM)
+jax==0.9.2
+jaxlib==0.9.2
+flowjax==19.1.0
+equinox==0.13.6
+optax==0.2.8
+numpy==2.4.4
+pandas==3.0.2
+tqdm==4.67.3
+
+# HT NN diffusion (PyTorch stack)
+# NOTE: torch==2.3.0+cu121 is a CUDA 12.1 build.
+# To install it, use:
+#   pip install torch==2.3.0 --index-url https://download.pytorch.org/whl/cu121
+# or replace the line below with `torch==2.3.0` for the default (CPU/CUDA) wheel.
+torch==2.3.0+cu121
+pytorch-lightning==2.6.1
+tensorboard==2.20.0
+PyYAML==6.0.3
+
+# HT MCMC denoisers
+numpyro==0.20.1
+blackjax==1.5
+
+# Unimodality analysis
+diptest==0.10.0

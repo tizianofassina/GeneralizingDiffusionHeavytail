@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: hf_toy
+Version: 0.0.1
+Requires-Dist: blackjax>=1.5
+Requires-Dist: importlib-metadata; python_version > "3.12"

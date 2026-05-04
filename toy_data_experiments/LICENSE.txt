@@ -1,0 +1,2 @@
+src/VE_SGM/ is distributed under CC BY-NC-SA 4.0: you may use and modify it for non-commercial purposes only, you must credit the author, and any modifications you redistribute must carry the same license.
+Everything else in the repository is distributed under the MIT License (Copyright © 2026): you are free to use, modify, and redistribute it, including commercially, as long as you keep the copyright notice. The software is provided "as is", without warranty of any kind.

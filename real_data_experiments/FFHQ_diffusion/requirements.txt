@@ -1,0 +1,16 @@
+click==8.3.0
+lightning==2.5.5
+lightning-utilities==0.15.2
+matplotlib==3.10.7
+matplotlib-inline==0.2.1
+numpy==1.26.4
+pillow==11.3.0
+pytorch-lightning==2.5.5
+requests==2.32.5
+scipy==1.15.3
+setuptools==59.6.0
+torch==2.1.1+cu118
+torchaudio==2.1.1+cu118
+torchmetrics==1.8.2
+torchvision==0.16.1+cu118
+tqdm==4.67.1

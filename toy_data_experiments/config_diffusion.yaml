@@ -1,0 +1,37 @@
+diffusion_config :
+     sigma_min : 0.00002   
+     sigma_max : 8.
+     log_mean : -1.   
+     log_std : 1.2
+     num_workers : 6  
+
+optim_config :
+     lr : 1e-4   
+
+denoiser_config :
+     sigma_data : 1   
+     sigma_min : 0.00002
+     sigma_max : 8.
+     sigma_disc : 1000   
+     input_dim : 2
+     embed_dim : 256   
+     channel_mult : [ 2,   4,   4,   2]
+
+normalization : True
+
+trainer_config:
+     max_epochs: 6000
+     accelerator: "gpu"
+     devices: -1
+     batch_size: 1_000
+     batch_gen: 50_000
+     n_steps: 100
+     strategy: "ddp"
+     num_workers: 6
+     
+
+
+
+
+
+

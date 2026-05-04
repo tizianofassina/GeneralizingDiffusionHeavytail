@@ -1,0 +1,11 @@
+[project]
+name = "hf_toy"
+version = "0.0.1"
+dependencies = [
+    "blackjax>=1.5",
+    'importlib-metadata; python_version>"3.12"',
+]
+
+[tool.setuptools]
+# ...
+package-dir = {"hf_toy" = "src"}
