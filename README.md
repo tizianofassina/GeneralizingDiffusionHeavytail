@@ -34,7 +34,7 @@
 - [Initialization strategies](#initialization-strategies)
 - [Metrics](#metrics)
 - [Datasets](#datasets)
-- [Reproducing the paper](#reproducing-the-paper)
+- [Paper ↔ code map](#Paper-↔-code-map)
 - [Citation](#citation)
 - [Authors](#authors)
 
@@ -268,9 +268,9 @@ evaluation protocol.
 
 ---
 
-## Reproducing the paper
+## Paper ↔ code map
 
-The two parts map onto the paper as follows. All scripts fix random seeds for reproducibility.
+How the codebase corresponds to the paper (random seeds are fixed throughout).
 
 | Paper | Code |
 | --- | --- |
@@ -279,8 +279,9 @@ The two parts map onto the paper as follows. All scripts fix random seeds for re
 | Flow training: fixed vs dynamic noise | `gen_flow_*` (toy), `NoisedFlow/*/train_noised_lightning.py` (images) |
 | Real-world validation — FFHQ-64, ImageNet birds/dogs (Appendix) | `real_data_experiments/{NoisedFlow, FFHQ_diffusion, ImageNet_diffusion}` |
 
-A typical image run is: train the flow on noised data (`NoisedFlow`), generate the initialization tensors,
-then generate + evaluate with the matching diffusion sub-project (`FFHQ_diffusion` or `ImageNet_diffusion`).
+**Intended pipeline (image side):** train the flow on noised data (`NoisedFlow`) →
+generate the initialization tensors → generate &amp; evaluate with the matching
+diffusion sub-project (`FFHQ_diffusion` or `ImageNet_diffusion`).
 
 ---
 
