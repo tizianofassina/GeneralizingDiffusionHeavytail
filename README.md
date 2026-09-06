@@ -90,10 +90,10 @@ Gaussian $\pi_\infty$, the true noised distribution $\tilde p_T$, and the learne
 ## Requirements
 
 Each experiment was developed on an HPC cluster and **ships its own `requirements.txt`** — the toy code is
-JAX-based, the image code is PyTorch-based, and the three image sub-projects pin different CUDA builds. Set up
+JAX-based, the image code is PyTorch-based, and the three image sub-projects with different requirements (CUDA versions differ among different architectures). Set up
 one environment per part you intend to run; minor adjustments may be needed on local hardware.
 
-| Part | Stack | Pin file |
+| Part | Libraries | Requirements |
 | --- | --- | --- |
 | `toy_data_experiments/` | JAX · flowjax · equinox · optax · numpyro · blackjax · torch · Lightning · diptest | `toy_data_experiments/requirements.txt` (`pip install -e .` installs `src/` as `hf_toy`) |
 | `NoisedFlow/` | PyTorch · Lightning (TarFlow training) | `real_data_experiments/NoisedFlow/requirements.txt` |
