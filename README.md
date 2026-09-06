@@ -1,7 +1,7 @@
 <h1 align="center">Generalizing Score-based Generative Models<br>for Heavy-tailed Distributions</h1>
 
 <p align="center">
-  <b>Extending diffusion to heavy-tailed and high-dimensional targets through a flexible, flow-based initialization and early stopping.</b><br>
+  <b>Extending diffusion to heavy-tailed targets through a flexible, flow-based initialization.</b><br>
   A normalizing flow learns the <i>noised</i> distribution; a short-horizon diffusion denoiser refines it.
 </p>
 
