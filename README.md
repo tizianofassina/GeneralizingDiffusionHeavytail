@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="hero.png" alt="Generated ImageNet birds" width="840">
+  <img src="hero.png" alt="Generated ImageNet birds" width="600">
 </p>
 
 ---
