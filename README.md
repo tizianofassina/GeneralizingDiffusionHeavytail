@@ -274,8 +274,8 @@ How the codebase corresponds to the paper (random seeds are fixed throughout).
 
 | Paper | Code |
 | --- | --- |
-| Numerical illustration — GMM & Heavy-Tailed (Sec. 4) | `toy_data_experiments/` |
-| The role of initialization (π_∞ vs p̃_T vs p_0^θ) | `gen_init_*`, `diffusion_generation_*`, `results_*` |
+| Numerical illustration — GMM & Heavy-Tailed | `toy_data_experiments/` |
+| The role of initialization (π_∞ vs p_T vs p_0^θ) | `gen_init_*`, `diffusion_generation_*`, `results_*` |
 | Flow training: fixed vs dynamic noise | `gen_flow_*` (toy), `NoisedFlow/*/train_noised_lightning.py` (images) |
 | Real-world validation — FFHQ-64, ImageNet birds/dogs (Appendix) | `real_data_experiments/{NoisedFlow, FFHQ_diffusion, ImageNet_diffusion}` |
 
