@@ -233,8 +233,8 @@ evaluates the same strategies (the flow-based one being the method proposed in t
 | --- | --- | --- | --- |
 | `π_∞ (σ=80)` | Gaussian $\mathcal{N}(0,\sigma_{\max}^2 I)$ | long — 40 (FFHQ) / 32 (ImageNet) steps | classic EDM baseline |
 | `π_∞ (σ_T)` small | Gaussian at a small $\sigma_T$ (≈7, or the toy σ's) | short — 20 steps | *uninformed* short-horizon baseline |
-| `p̃_T` (empirical) | real data + $\sigma_T$ noise | short | near-ideal oracle initialization |
-| **`p_0^θ` (flow)** | **TarFlow / coupling flow trained on noised data** | short | **proposed method** — trained *fixed* or *dynamic*; CFG-guided on ImageNet |
+| `p_T` (empirical) | real data + $\sigma_T$ noise | short — 20 steps | near-ideal oracle initialization |
+| **`p_0^θ` (flow)** | **TarFlow / coupling flow trained on noised data** | short — 20 steps | **proposed method** — trained *fixed* or *dynamic*; CFG-guided on ImageNet |
 | flow (clean data) | flow trained on clean data | — | toy-only baseline |
 
 On the toy targets the denoiser is either the analytic score (GMM), a learned EDM-preconditioned MLP, or one
