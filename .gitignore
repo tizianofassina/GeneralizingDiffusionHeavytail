@@ -1,0 +1,86 @@
+# .gitignore — Code for "Generalizing Score-based Generative Models for Heavy-tailed Distributions"
+# Ships code + configs only. Data, weights, checkpoints, logs and generated
+# samples are produced at runtime and are never committed.
+
+# ── Python ───────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# ── Environments / secrets ───────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.conda/
+.env
+
+# ── Weights, checkpoints, tensors (regenerable) ──────────
+*.npy
+*.npz
+*.pt
+*.pth
+*.ckpt
+*.pkl
+*.safetensors
+
+# ── Runtime data / model / output trees ──────────────────
+# toy_data_experiments (created on the fly)
+data/
+data_gmm/
+data_gen_noised/
+data_gen_noised_gmm/
+data_gen_diffusion_nn/
+data_gen_diffusion_mcmc/
+data_gen_diffusion_gmm/
+model_flow/
+model_flow_gmm/
+model_diffusion/
+# real_data_experiments
+ImageNet_512_processed/
+generated/
+photos_FFHQ_for_plot/
+**/datasets/train_set/          # raw image set (keeps datasets/dataset_tool.py)
+
+# ── Downloaded metric backbones / caches ─────────────────
+**/torch_hub_cache/
+
+# ── Results & logs ───────────────────────────────────────
+results/
+*.csv
+results_mcmc_quality.txt
+logs/
+lightning_logs/
+runs/
+*.log
+*.out
+*.err
+slurm-*.out
+ram_watch_*
+
+# ── Keep placeholder folders, drop their contents ────────
+**/model_weights/*
+!**/model_weights/.gitkeep
+**/init_&_gen/*
+!**/init_&_gen/.gitkeep
+**/some_samples*/*
+!**/some_samples*/.gitkeep
+**/train_info/*
+!**/train_info/.gitkeep
+
+# ── OS / editor ──────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Keep these ───────────────────────────────────────────
+!**/.gitkeep
+# NB: assets/ (the README figure) is intentionally NOT ignored.
