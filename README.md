@@ -34,7 +34,7 @@
 - [Initialization strategies](#initialization-strategies)
 - [Metrics](#metrics)
 - [Datasets](#datasets)
-- [Paper ↔ code map](#Paper-↔-code-map)
+- [Paper and code map](#paper-and-code-map)
 - [Citation](#citation)
 - [Authors](#authors)
 
@@ -268,7 +268,7 @@ evaluation protocol.
 
 ---
 
-## Paper ↔ code map
+## Paper and code map
 
 How the codebase corresponds to the paper (random seeds are fixed throughout).
 
