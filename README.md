@@ -193,7 +193,7 @@ initialization, then scores them. Single-machine (no Slurm).
 | `generate_data.py` | Main generation. Loads `edm-ffhq-64x64-uncond-ve.pkl` and runs each strategy — `edm_classic` (σ=80, 40 Heun steps), `gaussian_sigma_7`, `empirical` (real + σ=7 noise), the TarFlow `flow_noised` init, and a `trained` baseline — producing 70k samples × 3 seeds plus preview PNGs. |
 | `sampling.py` | The sampler zoo: EDM 2nd-order **Heun** (deterministic, vector-σ and Karras-stochastic variants), DDPM, and Euler–Maruyama. |
 | `generation/gen_functions.py` | The five generator factories (classic-EDM, empirical, trained, flow-classic, flow-noised), batched generation, and tensor↔image conversion. |
-| `compute_results.py` | Orchestrates the metrics (FID, KID, DINO-FD, FID, SWD, MaxSWD) over the generated sets. |
+| `compute_results.py` | Orchestrates the metrics (FID, KID, DINO-FD, SWD, MaxSWD) over the generated sets. |
 | `metric_FFHQ.py` | Metric implementations — Inception / DINOv2 features, FID/KID, sliced-Wasserstein. |
 | `nearest_for_plot.py` | Builds the nearest-neighbour grid against the training set (memorization check / qualitative figure). |
 | `generation/train_info/ffhq-64x64.npz` | Reference FID statistics for FFHQ-64. |
