@@ -280,29 +280,3 @@ How the codebase corresponds to the paper (random seeds are fixed throughout).
 **Intended pipeline (image side):** train the flow on noised data (`NoisedFlow`) →
 generate the initialization tensors → generate &amp; evaluate with the matching
 diffusion sub-project (`FFHQ_diffusion` or `ImageNet_diffusion`).
-
----
-
-## Citation
-
-```bibtex
-@article{fassina2026generalizing,
-  title   = {Generalizing Score-based Generative Models for Heavy-tailed Distributions},
-  author  = {Fassina, Tiziano and Cardoso, Gabriel and Le Corff, Sylvain and Romary, Thomas},
-  journal = {arXiv preprint arXiv:2603.00772},
-  year    = {2026}
-}
-```
-
----
-
-## Authors
-
-**Tiziano Fassina** (STIM, Mines Paris — PSL), Gabriel Cardoso (STIM, Mines Paris — PSL),
-Sylvain Le Corff (LPSM, Sorbonne Université), Thomas Romary (STIM, Mines Paris — PSL).
-
-[GitHub](https://github.com/tizianofassina) · [LinkedIn](https://www.linkedin.com/in/tiziano-fassina) · tifas98@gmail.com
-
-External assets used under their respective licenses: the **EDM** and **EDM2** denoisers (NVIDIA), the
-**Stability** VAE encoder/decoder, and the **TarFlow** architecture (Apple). Modifications and new code are
-released under CC BY-NC-SA 4.0.
