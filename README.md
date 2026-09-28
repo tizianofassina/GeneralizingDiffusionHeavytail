@@ -51,7 +51,8 @@ The code is organized in two self-contained parts:
 
 - **`toy_data_experiments/`** — controlled 2D experiments (a heavy-tailed Student-*t* mixture and a Gaussian
   mixture) that isolate and measure the effect of the initialization, with both a learned neural denoiser and
-  three MCMC-based denoisers.
+  three MCMC-based denoisers, plus a higher-dimensional **d = 10** heavy-tailed suite that adds **t-EDM** and
+  **DLPM / Lévy** baselines and a training-set–size study.
 - **`real_data_experiments/`** — high-dimensional validation on images (FFHQ-64 faces and two ImageNet-512
   subsets, birds and dogs), where a lightweight **TarFlow** normalizing flow is trained on *noised* data and
   used as the initialization for a pretrained **Karras EDM / EDM2** denoiser.
@@ -111,7 +112,7 @@ pretrained Karras denoisers.
 
 ```
 Code_for_paper/
-├── toy_data_experiments/      # Section 4 — synthetic 2D targets (GMM + Heavy-Tailed)
+├── toy_data_experiments/      # Section 4 — synthetic targets: 2D (GMM + Heavy-Tailed) + d=10 HT suite
 └── real_data_experiments/     # Appendix — high-dimensional images
     ├── NoisedFlow/            #   (1) train a TarFlow on NOISED data  → the p_0^θ initialization
     ├── FFHQ_diffusion/        #   (2) EDM denoiser (Karras 2022) on FFHQ-64
@@ -151,6 +152,31 @@ extra Monte-Carlo KL evaluation.
 > `diffusion_generation_mcmc` → `results_ht`. GMM: `create_train_test_data_gmm` → `gen_flow_gmm` →
 > `diffusion_generation_gmm` → `results_gmm`. Steps are fail-loud; skipping one makes the next crash by design.
 > The HT neural-denoiser step additionally needs the `VE_SGM` diffusion package on `PYTHONPATH`.
+
+#### Higher dimension — the `d = 10` heavy-tailed suite
+
+The same heavy-tailed study lifted to **d = 10** (a 20-mode Student-*t* mixture, df=3) at a single fixed
+horizon **σ_T = 2.3**. Two things are new relative to the 2D setup: denoiser **training is split into its own
+script** so several train-set sizes run as a Slurm array (a training-set–size study), and two extra diffusion
+baselines are added — **t-EDM** (Student-*t* prior) and **DLPM / Lévy** (α-stable prior, Shariatian et al.).
+Same conventions as the 2D scripts: paths are relative to the run directory, and both `VE_SGM` (on
+`PYTHONPATH`) and `hf_toy` are required.
+
+| File | What it does |
+| --- | --- |
+| `create_data_dim_10_ht.py` | Builds the dim-10, 20-mode Student-*t* (df=3) target; writes one train set of size `argv[1]` and the two 10⁷ test sets (seeds 35 & 39). Run once per size. |
+| `unimodality_dim_10_ht.py` | Hartigan dip test (`hf_toy.find_unimodality`) locating the unimodality-onset horizon `σ_T` for the dim-10 target. |
+| `gen_flow_dim_10_ht.py` | Trains the dim-10 heavy-tailed flow (Student-*t* base, σ=2.3, n=10⁴) and samples `p_theta` into `data/data_gen_noised/`. Arg: `dynamic` \| `fix`. |
+| `training_different_denoiser_dim_10.py` (+`.sh`) | Trains **one VE-SGM denoiser per train size** (`--train-size`), idempotent; the `.sh` is a Slurm array (0–4) over sizes 10³–10⁵. Writes `model_diffusion/vesgm_dim_10_size_{n}_tail_3_model.ckpt`. |
+| `nn_levy_diffusion_dim_10.py` | Trains the **DLPM / Lévy** baseline (α-stable) and generates 1M points with the deterministic DLIM sampler → `samples_dlpm_…npy`. Self-contained (trains + generates). |
+| `benchmarking_dim_10.py` | Fixed-σ comparison at σ_T=2.3: generates DDPM + Heun from {gaussian, p_t, p_theta} and t-EDM, loads the DLPM baseline, then the full evaluation (MSW natural + signed-log, tail quantiles along the worst direction) plus an in-script σ=0 flow baseline → `results_dim_10_final/`. |
+| `results_different_denoiser_dim_10.py` | **Training-set–size study**: p_T + ancestral DDPM with the per-size denoisers; one worst direction from the size-10⁵ set; MSW + tail quantiles by size → `results_dim_10_size_sigma23/`. |
+
+> Run order (d=10 HT): `create_data_dim_10_ht` (once per size) → *(optional)* `unimodality_dim_10_ht` to
+> confirm `σ_T` → `gen_flow_dim_10_ht` (**p_theta**) + `training_different_denoiser_dim_10[.sh]` (**VE-SGM**,
+> per size) + `nn_levy_diffusion_dim_10` (**DLPM**), with the **t-EDM** checkpoint trained beforehand →
+> `benchmarking_dim_10` (fixed-σ comparison) and `results_different_denoiser_dim_10` (size study). Fail-loud
+> like the 2D pipeline; both evaluation scripts need `VE_SGM` on `PYTHONPATH`.
 
 ### `real_data_experiments/NoisedFlow/` — train the flow on noised data
 
@@ -237,7 +263,9 @@ evaluates the same strategies (the flow-based one being the method proposed in t
 
 On the toy targets the denoiser is either the analytic score (GMM), a learned EDM-preconditioned MLP, or one
 of three MCMC samplers (HMC / Barker / NUTS). On images the denoiser is a **frozen** pretrained Karras model —
-only the flow is trained here.
+only the flow is trained here. The **d = 10** heavy-tailed suite compares the same three initializations and
+adds two extra diffusion baselines that replace the Gaussian prior entirely: **t-EDM** (Student-*t* prior) and
+**DLPM / Lévy** (α-stable prior).
 
 ---
 
@@ -245,7 +273,7 @@ only the flow is trained here.
 
 | Setting | Metrics |
 | --- | --- |
-| Toy (2D) | bulk **Max-Sliced Wasserstein**, **tail quantiles** along a worst-case projection, Monte-Carlo **KL** (GMM), and MCMC-quality diagnostics. |
+| Toy (2D and d=10) | bulk **Max-Sliced Wasserstein**, **tail quantiles** along a worst-case projection, Monte-Carlo **KL** (GMM), and MCMC-quality diagnostics. |
 | Images | **FID**, **KID**, **DINO-FD** (DINOv2 Fréchet distance), **SWD** and **MaxSWD**; plus nearest-neighbour grids to confirm samples are not memorized. |
 
 On ImageNet, SWD/MSW are computed in latent space and the rest in pixel space; image scores are reported as
@@ -257,7 +285,8 @@ evaluation protocol.
 ## Datasets
 
 - **Toy (synthetic, generated by the code).** A 2D **heavy-tailed** mixture (4 multivariate Student-*t*,
-  df=3) and a 2D **Gaussian mixture** (25 modes). Produced by the `create_train_test_data_*` scripts.
+  df=3) and a 2D **Gaussian mixture** (25 modes), plus a **d = 10** heavy-tailed mixture (20 modes, df=3).
+  Produced by the `create_train_test_data_*` and `create_data_dim_10_ht` scripts.
 - **FFHQ-64** (faces). Download per the [EDM instructions](https://github.com/NVlabs/edm); pack with
   `NoisedFlow/FFHQ_Flow/datasets/dataset_tool.py`.
 - **ImageNet-512, birds & dogs subsets.** Obtain and VAE-encode per the
@@ -275,6 +304,7 @@ How the codebase corresponds to the paper (random seeds are fixed throughout).
 | Numerical illustration — GMM & Heavy-Tailed | `toy_data_experiments/` |
 | The role of initialization (π_∞ vs p_T vs p_0^θ) | `gen_init_*`, `diffusion_generation_*`, `results_*` |
 | Flow training: fixed vs dynamic noise | `gen_flow_*` (toy), `NoisedFlow/*/train_noised_lightning.py` (images) |
+| Higher-dimension heavy-tailed study (d=10) + t-EDM / DLPM baselines | `toy_data_experiments/*_dim_10*` |
 | Real-world validation — FFHQ-64, ImageNet birds/dogs (Appendix) | `real_data_experiments/{NoisedFlow, FFHQ_diffusion, ImageNet_diffusion}` |
 
 **Intended pipeline (image side):** train the flow on noised data (`NoisedFlow`) →
